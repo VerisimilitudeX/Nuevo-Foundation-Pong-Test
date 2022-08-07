@@ -1,7 +1,7 @@
 import random
 import pygame
 
-#https://nick.sarbicki.com/blog/learn-pygame-with-pong/
+# https://nick.sarbicki.com/blog/learn-pygame-with-pong/
 
 class Paddle(pygame.Rect):
     def __init__(self, velocity, up_key, down_key, *args, **kwargs):
