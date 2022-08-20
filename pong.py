@@ -32,7 +32,7 @@ class Pong:
         self.paddles = []
         self.balls = []
         self.paddles.append(Paddle(  # The left paddle
-            self.BALL_VELOCITY,
+            Ball.BALL_VELOCITY,
             pygame.K_w,
             pygame.K_s,
             0,
@@ -42,7 +42,7 @@ class Pong:
         ))
 
         self.paddles.append(Paddle(  # The right paddle
-            self.BALL_VELOCITY,
+            Ball.BALL_VELOCITY,
             pygame.K_UP,
             pygame.K_DOWN,
             Screen.WIDTH - Paddle.WIDTH,
@@ -52,7 +52,7 @@ class Pong:
         ))
 
         self.balls.append(Ball(
-            self.BALL_VELOCITY,
+            Ball.BALL_VELOCITY,
             self.BALLXSTARTPOSITION,
             self.BALLYSTARTPOSITION,
             self.BALL_WIDTH,
@@ -75,14 +75,14 @@ class Pong:
                 self.LEFTSCORE = self.LEFTSCORE + 1
                 ball.x = self.BALLXSTARTPOSITION
                 ball.y = self.BALLYSTARTPOSITION
-                ball.velocity = -1 * self.BALL_VELOCITY
+                ball.velocity = -1 * Ball.BALL_VELOCITY
                 ball.angle = self.BALL_ANGLE
 
             if ball.x < 0:
                 self.RIGHTSCORE = self.RIGHTSCORE + 1
                 ball.x = self.BALLXSTARTPOSITION
                 ball.y = self.BALLYSTARTPOSITION
-                ball.velocity = self.BALL_VELOCITY
+                ball.velocity = Ball.BALL_VELOCITY
                 ball.angle = self.BALL_ANGLE
 
             if ball.y > Screen.HEIGHT - self.BALL_WIDTH or ball.y < 0:
