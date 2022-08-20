@@ -1,15 +1,13 @@
-import pygame, random, sys
+import pygame
+import random
+import sys
+from screen import Screen
 
 from paddle import Paddle
 from ball import Ball
 
+
 class Pong:
-    HEIGHT = 600
-    WIDTH = 800
-
-    PADDLE_WIDTH = 10
-    PADDLE_HEIGHT = 100
-
     BALL_WIDTH = 10
     BALL_VELOCITY = 6
     BALL_ANGLE = 0
@@ -19,14 +17,14 @@ class Pong:
     LEFTSCORE = 0
     RIGHTSCORE = 0
 
-    BALLXSTARTPOSITION = WIDTH / 2 - BALL_WIDTH / 2
-    BALLYSTARTPOSITION = HEIGHT / 2 - BALL_WIDTH / 2
+    BALLXSTARTPOSITION = Screen.WIDTH / 2 - BALL_WIDTH / 2
+    BALLYSTARTPOSITION = Screen.HEIGHT / 2 - BALL_WIDTH / 2
 
     def __init__(self):
         pygame.init()
 
         # Setup the screen
-        self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+        self.screen = pygame.display.set_mode((Screen.WIDTH, Screen.HEIGHT))
         self.clock = pygame.time.Clock()
 
         # Create the player objects.
@@ -38,19 +36,19 @@ class Pong:
             pygame.K_w,
             pygame.K_s,
             0,
-            self.HEIGHT / 2 - self.PADDLE_HEIGHT / 2,
-            self.PADDLE_WIDTH,
-            self.PADDLE_HEIGHT
+            Screen.HEIGHT / 2 - Paddle.HEIGHT / 2,
+            Paddle.WIDTH,
+            Paddle.HEIGHT
         ))
 
         self.paddles.append(Paddle(  # The right paddle
             self.BALL_VELOCITY,
             pygame.K_UP,
             pygame.K_DOWN,
-            self.WIDTH - self.PADDLE_WIDTH,
-            self.HEIGHT / 2 - self.PADDLE_HEIGHT / 2,
-            self.PADDLE_WIDTH,
-            self.PADDLE_HEIGHT
+            Screen.WIDTH - Paddle.WIDTH,
+            Screen.HEIGHT / 2 - Paddle.HEIGHT / 2,
+            Paddle.WIDTH,
+            Paddle.HEIGHT
         ))
 
         self.balls.append(Ball(
@@ -61,7 +59,7 @@ class Pong:
             self.BALL_WIDTH
         ))
 
-        self.central_line = pygame.Rect(self.WIDTH/2, 0, 1, self.HEIGHT)
+        self.central_line = pygame.Rect(Screen.WIDTH/2, 0, 1, Screen.HEIGHT)
 
     def draw_text(self, text, size, x, y):
         font_name = pygame.font.match_font('arial')
@@ -73,7 +71,7 @@ class Pong:
 
     def check_ball_hits_wall(self):
         for ball in self.balls:
-            if ball.x > self.WIDTH:
+            if ball.x > Screen.WIDTH:
                 self.LEFTSCORE = self.LEFTSCORE + 1
                 ball.x = self.BALLXSTARTPOSITION
                 ball.y = self.BALLYSTARTPOSITION
@@ -87,7 +85,7 @@ class Pong:
                 ball.velocity = self.BALL_VELOCITY
                 ball.angle = self.BALL_ANGLE
 
-            if ball.y > self.HEIGHT - self.BALL_WIDTH or ball.y < 0:
+            if ball.y > Screen.HEIGHT - self.BALL_WIDTH or ball.y < 0:
                 ball.angle = -ball.angle
 
     def check_ball_hits_paddle(self):
@@ -110,12 +108,12 @@ class Pong:
 
             self.check_ball_hits_paddle()
             self.check_ball_hits_wall()
-                
+
             # Redraw the screen.
             self.screen.fill((0, 0, 0))
 
             for paddle in self.paddles:
-                paddle.move_paddle(self.HEIGHT)
+                paddle.move_paddle(Screen.HEIGHT)
                 pygame.draw.rect(self.screen, self.COLOUR, paddle)
 
             # We know we're not ending the game so lets move the ball here.
@@ -129,4 +127,4 @@ class Pong:
             self.draw_text(str(self.RIGHTSCORE), 36, 450, 10)
 
             pygame.display.flip()
-            self.clock.tick(120)
+            self.clock.tick(90)

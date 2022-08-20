@@ -1,6 +1,8 @@
 import pygame
 
 class Paddle(pygame.Rect):
+    WIDTH = 10
+    HEIGHT = 100
     def __init__(self, velocity, up_key, down_key, *args, **kwargs):
         self.velocity = velocity
         self.up_key = up_key

@@ -1,5 +1,6 @@
 import pygame
 
+
 class Ball(pygame.Rect):
     def __init__(self, velocity, *args, **kwargs):
         self.velocity = velocity
